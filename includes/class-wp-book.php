@@ -158,6 +158,8 @@ class Wp_Book {
 
 		// Add admin menu items.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'my_admin_menu' );
+
+		// Custom Post type and Taxonomies.
 		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_type_book' );
 		$this->loader->add_action( 'init', $plugin_admin, 'book_category' );
 		$this->loader->add_action( 'init', $plugin_admin, 'book_tag' );
@@ -176,7 +178,6 @@ class Wp_Book {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 	}
 
 	/**

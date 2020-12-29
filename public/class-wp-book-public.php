@@ -98,5 +98,15 @@ class Wp_Book_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-book-public.js', array( 'jquery' ), $this->version, false );
 
 	}
-
+	// /**
+	// * Custom post type display
+	// *
+	// * @param [type] $query query for display.
+	// * @return $query
+	// */
+	// public function add_my_post_types_to_query( $query ) {
+	// if ( is_home() && $query->is_main_query() )
+	// $query->set( 'post_type', array( 'post', 'books' ) );
+	// return $query;
+	// }
 }
