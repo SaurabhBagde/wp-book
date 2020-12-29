@@ -158,6 +158,9 @@ class Wp_Book {
 
 		// Add admin menu items.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'my_admin_menu' );
+		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_type_book' );
+		$this->loader->add_action( 'init', $plugin_admin, 'book_category' );
+		$this->loader->add_action( 'init', $plugin_admin, 'book_tag' );
 	}
 
 	/**
