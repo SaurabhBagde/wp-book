@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -30,7 +29,7 @@ class Wp_Book_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		flush_rewrite_rules();
 	}
 
 }
