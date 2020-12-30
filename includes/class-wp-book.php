@@ -163,6 +163,11 @@ class Wp_Book {
 		$this->loader->add_action( 'init', $plugin_admin, 'custom_post_type_book' );
 		$this->loader->add_action( 'init', $plugin_admin, 'book_category' );
 		$this->loader->add_action( 'init', $plugin_admin, 'book_tag' );
+
+		// Meta box.
+		/* Fire our meta box setup function on the post editor screen. */
+		$this->loader->add_action( 'load-post.php', $plugin_admin, 'book_meta_boxes_setup' );
+		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'book_meta_boxes_setup' );
 	}
 
 	/**

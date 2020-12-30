@@ -274,4 +274,72 @@ class Wp_Book_Admin {
 			)
 		);
 	}
+	/**
+	 *  Meta box setup function.
+	 *
+	 * @return void
+	 */
+	public function book_meta_boxes_setup() {
+
+		// Add meta boxes on the 'add_meta_boxes' hook.
+		add_action( 'add_meta_boxes', array( $this, 'book_post_meta_boxes' ) );
+	}
+	/**
+	 * Adding meta box function
+	 *
+	 * @return void
+	 */
+	public function book_post_meta_boxes() {
+		// Create one or more meta boxes to be displayed on the post editor screen.
+		add_meta_box(
+			'book-meta-box',                             // Unique ID.
+			esc_html__( 'Book Meta', 'example' ),       // Title.
+			array( $this, 'book_meta_box_display' ),   // Callback function.
+			'books',                                  // Admin page (or post type).
+			'side',                                  // Context.
+			'default'                               // Priority.
+		);
+	}
+	/**
+	 *  Display the post meta box.
+	 *
+	 * @param [type] $post hook provided args.
+	 * @return void
+	 */
+	public function book_meta_box_display( $post ) { ?>
+
+		<?php wp_nonce_field( basename( __FILE__ ), 'smashing_post_class_nonce' ); ?>
+
+	<p>
+	<label for="Author Name"><?php _e( 'Author Name' ); ?></label>
+	<br />
+	<input class="widefat" type="text" name="Author Name" id="Author Name" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Author Name', true ) ); ?>" size="30" />
+	</p>
+	<p>
+	<label for="Price"><?php _e( 'Price' ); ?></label>
+	<br />
+	<input class="widefat" type="number" name="Price" id="Price" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Price', true ) ); ?>" size="30" />
+	</p>
+	<p>
+	<label for="Publisher"><?php _e( 'Publisher' ); ?></label>
+	<br />
+	<input class="widefat" type="text" name="Publisher" id="Publisher" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Publisher', true ) ); ?>" size="30" />
+	</p>
+	<p>
+	<label for="Year"><?php _e( 'Year' ); ?></label>
+	<br />
+	<input class="widefat" type="text" name="Year" id="Year" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Year', true ) ); ?>" size="30" />
+	</p>
+	<p>
+	<label for="Edition"><?php _e( 'Edition' ); ?></label>
+	<br />
+	<input class="widefat" type="text" name="Edition" id="Edition" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Edition', true ) ); ?>" size="30" />
+	</p>
+	<p>
+	<label for="URL"><?php _e( 'URL' ); ?></label>
+	<br />
+	<input class="widefat" type="text" name="URL" id="URL" value="<?php echo esc_attr( get_post_meta( $post->ID, 'URL', true ) ); ?>" size="30" />
+	</p>
+		<?php
+	}
 }
