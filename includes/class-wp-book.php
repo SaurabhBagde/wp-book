@@ -168,6 +168,10 @@ class Wp_Book {
 		/* Fire our meta box setup function on the post editor screen. */
 		$this->loader->add_action( 'load-post.php', $plugin_admin, 'book_meta_boxes_setup' );
 		$this->loader->add_action( 'load-post-new.php', $plugin_admin, 'book_meta_boxes_setup' );
+
+		// Meta table.
+		$this->loader->add_action( 'init', $plugin_admin, 'bookmeta_integrate_wpdb', 0 );
+		$this->loader->add_action( 'save_post_books', $plugin_admin, 'save_book_meta_table', 10, 2 );
 	}
 
 	/**

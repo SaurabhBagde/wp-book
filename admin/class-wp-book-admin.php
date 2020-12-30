@@ -308,38 +308,152 @@ class Wp_Book_Admin {
 	 */
 	public function book_meta_box_display( $post ) { ?>
 
-		<?php wp_nonce_field( basename( __FILE__ ), 'smashing_post_class_nonce' ); ?>
+		<?php wp_nonce_field( basename( __FILE__ ), 'wp_wpb_cpt_nonce' ); ?>
 
-	<p>
-	<label for="Author Name"><?php _e( 'Author Name' ); ?></label>
+	<label for="author_name"><?php _e( 'Author Name' ); ?></label>
 	<br />
-	<input class="widefat" type="text" name="Author Name" id="Author Name" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Author Name', true ) ); ?>" size="30" />
-	</p>
-	<p>
-	<label for="Price"><?php _e( 'Price' ); ?></label>
+	<input type="text" name="author_name" id="author_name"  size="30" />
 	<br />
-	<input class="widefat" type="number" name="Price" id="Price" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Price', true ) ); ?>" size="30" />
-	</p>
-	<p>
-	<label for="Publisher"><?php _e( 'Publisher' ); ?></label>
+	<label for="price"><?php _e( 'Price' ); ?></label>
 	<br />
-	<input class="widefat" type="text" name="Publisher" id="Publisher" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Publisher', true ) ); ?>" size="30" />
-	</p>
-	<p>
-	<label for="Year"><?php _e( 'Year' ); ?></label>
+	<input  type="number" name="price" id="price"  size="30" />
 	<br />
-	<input class="widefat" type="text" name="Year" id="Year" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Year', true ) ); ?>" size="30" />
-	</p>
-	<p>
-	<label for="Edition"><?php _e( 'Edition' ); ?></label>
+	<label for="publisher"><?php _e( 'Publisher' ); ?></label>
 	<br />
-	<input class="widefat" type="text" name="Edition" id="Edition" value="<?php echo esc_attr( get_post_meta( $post->ID, 'Edition', true ) ); ?>" size="30" />
-	</p>
-	<p>
-	<label for="URL"><?php _e( 'URL' ); ?></label>
+	<input  type="text" name="publisher" id="publisher"  size="30" />
 	<br />
-	<input class="widefat" type="text" name="URL" id="URL" value="<?php echo esc_attr( get_post_meta( $post->ID, 'URL', true ) ); ?>" size="30" />
-	</p>
+	<label for="year"><?php _e( 'Year' ); ?></label>
+	<br />
+	<input  type="text" name="year" id="year"  size="30" />
+	<br />
+	<label for="edition"><?php _e( 'Edition' ); ?></label>
+	<br />
+	<input  type="text" name="edition" id="edition" size="30" />
+	<br />
+	<label for="ur_l"><?php _e( 'URL' ); ?></label>
+	<br />
+	<input  type="text" name="ur_l" id="ur_l" size="30" />
 		<?php
 	}
+
+	// Meta Table.
+	/**
+	 * Meta table integrate
+	 *
+	 * @return void
+	 */
+	public function bookmeta_integrate_wpdb() {
+		global $wpdb;
+
+		$wpdb->bookmeta  = $wpdb->prefix . 'bookmeta';
+		$wpdb->tables[]  = 'bookmeta';
+
+		return;
+	}
+	/**
+	 * Adds meta data field to a badge.
+	 *
+	 * @param int    $book_id    book ID.
+	 * @param string $meta_key   Metadata name.
+	 * @param mixed  $meta_value Metadata value.
+	 * @param bool   $unique     Optional, default is false. Whether the same key should not be added.
+	 * @return int|false Meta ID on success, false on failure.
+	 */
+	public function add_book_meta( $book_id, $meta_key, $meta_value, $unique = false ) {
+		return add_metadata( 'books', $book_id, $meta_key, $meta_value, $unique );
+	}
+
+	/**
+	 * Removes metadata matching criteria from a badge.
+	 *
+	 * You can match based on the key, or key and value. Removing based on key and
+	 * value, will keep from removing duplicate metadata with the same key. It also
+	 * allows removing all metadata matching key, if needed.
+	 *
+	 * @param int    $book_id    book ID.
+	 * @param string $meta_key   Metadata name.
+	 * @param mixed  $meta_value Optional. Metadata value.
+	 * @return bool True on success, false on failure.
+	 */
+	public function delete_book_meta( $book_id, $meta_key, $meta_value = '' ) {
+		return delete_metadata( 'books', $book_id, $meta_key, $meta_value );
+	}
+
+	/**
+	 * Retrieve meta field for a badge.
+	 *
+	 * @param int    $book_id book ID.
+	 * @param string $key     Optional. The meta key to retrieve. By default, returns data for all keys.
+	 * @param bool   $single  Whether to return a single value.
+	 * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
+	 */
+	public function get_book_meta( $book_id, $key = '', $single = false ) {
+		return get_metadata( 'books', $book_id, $key, $single );
+	}
+
+	/**
+	 * Update badge meta field based on badge ID.
+	 *
+	 * Use the $prev_value parameter to differentiate between meta fields with the
+	 * same key and badge ID.
+	 *
+	 * If the meta field for the user does not exist, it will be added.
+	 *
+	 * @param int    $book_id   book ID.
+	 * @param string $meta_key   Metadata key.
+	 * @param mixed  $meta_value Metadata value.
+	 * @param mixed  $prev_value Optional. Previous value to check before removing.
+	 * @return int|bool Meta ID if the key didn't exist, true on successful update, false on failure.
+	 */
+
+	/**
+	 * Save book meta data into meta table.
+	 *
+	 * @param [type] $post_id post id.
+	 * @return int post id.
+	 */
+	public function save_book_meta_table( $post_id, $post ) {
+
+		if ( ! isset( $_POST['wp_wpb_cpt_nonce'] ) || ! wp_verify_nonce( $_POST['wp_wpb_cpt_nonce'], basename( __FILE__ ) ) ) {
+			return $post_id;
+		}
+		$post_slug = 'books';
+		if ( $post_slug !== $post->post_type ) {
+			return;
+		}
+
+		$author_name = '';
+		if ( ! empty( $_POST['author_name'] ) ) {
+			$author_name = sanitize_text_field( $_POST['author_name'] );
+			update_book_meta( $post_id, 'book_author_name', $author_name );
+		}
+		$price = '';
+		if ( ! empty( $_POST['price'] ) ) {
+			$price = sanitize_text_field( $_POST['price'] );
+			update_book_meta( $post_id, 'book_price', $author_name );
+		}
+		$publisher = '';
+		if ( ! empty( $_POST['publisher'] ) ) {
+			$publisher = sanitize_text_field( $_POST['publisher'] );
+			update_book_meta( $post_id, 'book_publisher', $publisher );
+		}
+		$year = '';
+		if ( ! empty( $_POST['year'] ) ) {
+			$year = sanitize_text_field( $_POST['year'] );
+			update_book_meta( $post_id, 'book_year', $year );
+		}
+		$edition = '';
+		if ( ! empty( $_POST['edition'] ) ) {
+			$edition = sanitize_text_field( $_POST['edition'] );
+			update_book_meta( $post_id, 'book_edition', $edition );
+		}
+		$url = '';
+		if ( ! empty( $_POST['ur_l'] ) ) {
+			$url = sanitize_text_field( $_POST['ur_l'] );
+			update_book_meta( $post_id, 'book_url', $url );
+		}
+	}
+}
+function update_book_meta( $book_id, $meta_key, $meta_value, $prev_value = '' ) {
+	return update_metadata( 'book', $book_id, $meta_key, $meta_value, $prev_value );
 }
