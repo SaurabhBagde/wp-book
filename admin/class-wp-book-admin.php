@@ -105,7 +105,7 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function my_admin_menu() {
-		add_menu_page( 'New Plugin Settings', 'Books Menu', 'manage_options', 'booksettings', array( $this, 'book_admin_page' ), 'dashicons-tickets', 250 );
+		add_menu_page( 'book_settings', 'Books Menu', 'manage_options', 'book_settings', array( $this, 'book_admin_page' ), 'dashicons-tickets', 250 );
 		add_submenu_page( 'booksettings', 'books settings', 'Book Setting', 'manage_options', 'book-submenu', array( $this, 'submenu' ) );
 
 	}
@@ -117,6 +117,46 @@ class Wp_Book_Admin {
 	public function book_admin_page() {
 		// Return View.
 		require_once 'partials/wp-book-admin-display.php';
+	}
+	/**
+	 * Book seetings setup function
+	 *
+	 * @return void
+	 */
+	public function book_custom_settings() {
+		register_setting( 'books-setting-group', 'currency' );
+		register_setting( 'books-setting-group', 'post_per_page' );
+
+		add_settings_section( 'book-config', 'Book Configuration', array( $this, 'book_config_section' ), 'book_settings' );
+
+		add_settings_field( 'book-currency', 'Currency', array( $this, 'book_price_currency' ), 'book_settings', 'book-config' );
+		add_settings_field( 'book-post-per-page', 'Books per page', array( $this, 'book_post_per_page' ), 'book_settings', 'book-config' );
+	}
+	/**
+	 * Section setup Book Config
+	 *
+	 * @return void
+	 */
+	public function book_config_section() {
+		echo 'customize ur info';
+	}
+	/**
+	 * Book price post per page.
+	 *
+	 * @return void
+	 */
+	public function book_price_currency() {
+		$currency = get_option( 'currency' );
+		echo '<input type="text" name="currency" value="' . esc_attr( $currency ) . ' " placeholder = "$"/>';
+	}
+	/**
+	 * Book price post per page
+	 *
+	 * @return void
+	 */
+	public function book_post_per_page() {
+		$post_per_page = get_option( 'post_per_page' );
+		echo '<input type="text" name="post_per_page" value="' . esc_attr( $post_per_page ) . ' " placeholder = "10"/>';
 	}
 	/**
 	 * Submenu Page
