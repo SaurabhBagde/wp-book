@@ -173,6 +173,12 @@ class Wp_Book {
 		// Meta table.
 		$this->loader->add_action( 'init', $plugin_admin, 'bookmeta_integrate_wpdb', 0 );
 		$this->loader->add_action( 'save_post_books', $plugin_admin, 'save_book_meta_table', 10, 2 );
+
+		// Shortcode.
+		$this->loader->add_action( 'init', $plugin_admin, 'register_shortcodes' );
+
+		// Dashboard widget.
+		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'admin_dashboard_widget' );
 	}
 
 	/**

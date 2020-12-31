@@ -138,7 +138,7 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function book_config_section() {
-		echo 'customize ur info';
+		echo 'Configure Book Options';
 	}
 	/**
 	 * Book price post per page.
@@ -385,8 +385,8 @@ class Wp_Book_Admin {
 	public function bookmeta_integrate_wpdb() {
 		global $wpdb;
 
-		$wpdb->bookmeta  = $wpdb->prefix . 'bookmeta';
-		$wpdb->tables[]  = 'bookmeta';
+		$wpdb->bookmeta = $wpdb->prefix . 'bookmeta';
+		$wpdb->tables[] = 'bookmeta';
 
 		return;
 	}
@@ -420,15 +420,15 @@ class Wp_Book_Admin {
 	}
 
 	/**
-	 * Retrieve meta field for a badge.
+	 * Retrieve meta field for a book.
 	 *
 	 * @param int    $book_id book ID.
 	 * @param string $key     Optional. The meta key to retrieve. By default, returns data for all keys.
 	 * @param bool   $single  Whether to return a single value.
 	 * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
 	 */
-	public function get_book_meta( $book_id, $key = '', $single = false ) {
-		return get_metadata( 'books', $book_id, $key, $single );
+	public function get_book_meta( $book_id, $key = '', $single = true ) {
+		return get_metadata( 'book', $book_id, $key, $single );
 	}
 
 	/**
@@ -453,7 +453,8 @@ class Wp_Book_Admin {
 	 * Save book meta data into meta table.
 	 *
 	 * @param [type] $post_id post id.
-	 * @return int post id.
+	 * @param [type] $post post.
+	 * @return int
 	 */
 	public function save_book_meta_table( $post_id, $post ) {
 
@@ -467,33 +468,111 @@ class Wp_Book_Admin {
 
 		$author_name = '';
 		if ( ! empty( $_POST['author_name'] ) ) {
-			$author_name = sanitize_text_field( $_POST['author_name'] );
+			$author_name = sanitize_text_field( wp_unslash( $_POST['author_name'] ) );
 			$this->update_book_meta( $post_id, 'book_author_name', $author_name );
 		}
 		$price = '';
 		if ( ! empty( $_POST['price'] ) ) {
-			$price = sanitize_text_field( $_POST['price'] );
+			$price = sanitize_text_field( wp_unslash( $_POST['price'] ) );
 			$this->update_book_meta( $post_id, 'book_price', $price );
 		}
 		$publisher = '';
 		if ( ! empty( $_POST['publisher'] ) ) {
-			$publisher = sanitize_text_field( $_POST['publisher'] );
+			$publisher = sanitize_text_field( wp_unslash( $_POST['publisher'] ) );
 			$this->update_book_meta( $post_id, 'book_publisher', $publisher );
 		}
 		$year = '';
 		if ( ! empty( $_POST['year'] ) ) {
-			$year = sanitize_text_field( $_POST['year'] );
+			$year = sanitize_text_field( wp_unslash( $_POST['year'] ) );
 			$this->update_book_meta( $post_id, 'book_year', $year );
 		}
 		$edition = '';
 		if ( ! empty( $_POST['edition'] ) ) {
-			$edition = sanitize_text_field( $_POST['edition'] );
+			$edition = sanitize_text_field( wp_unslash( $_POST['edition'] ) );
 			$this->update_book_meta( $post_id, 'book_edition', $edition );
 		}
 		$url = '';
 		if ( ! empty( $_POST['ur_l'] ) ) {
-			$url = sanitize_text_field( $_POST['ur_l'] );
+			$url = sanitize_text_field( wp_unslash( $_POST['ur_l'] ) );
 			$this->update_book_meta( $post_id, 'book_url', $url );
 		}
+	}
+
+	// ShortCode.
+	/**
+	 * Registering a shortcode
+	 *
+	 * @return void
+	 */
+	public function register_shortcodes() {
+		add_shortcode( 'book', array( $this, 'book_shortcode_function' ) );
+	}
+	/**
+	 * Book Shortcode
+	 *
+	 * @param [type] $atts shortcode passed attributes.
+	 */
+	public function book_shortcode_function( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'id'          => '',
+				'author_name' => '',
+				'year'        => '',
+				'category'    => '',
+				'tag'         => '',
+				'publisher'   => '',
+			),
+			$atts
+		);
+		$the_query = new WP_Query(
+			array(
+				'post_type' => 'books',
+				'p'         => $atts['id'],
+			)
+		);
+
+		if ( $the_query->have_posts() ) {
+			?>
+				<p><?php $title = esc_html( get_the_title() ); ?></p>
+				<?php
+				wp_reset_postdata();
+
+		} else {
+			// no post.
+			echo 'No title';
+		}
+		$author = $this->get_book_meta( $atts['id'], 'book_author_name' );
+		$price = $this->get_book_meta( $atts['id'], 'book_price' );
+		?>
+			<p>Title: <?php echo $title; ?></p>
+			<p>Author: <?php echo $author; ?></p>
+			<p>Price: <?php echo $price; ?></p>
+
+		<?php
+
+	}
+	/**
+	 * Admin dashboard widget for top 5 books
+	 *
+	 * @return void
+	 */
+	public function admin_dashboard_widget() {
+		wp_add_dashboard_widget( 'admin-category-count', 'Top 5 Books', array( $this, 'widget_top_books' ) );
+	}
+	/**
+	 * Books widget top 5 display.
+	 *
+	 * @return void
+	 */
+	public function widget_top_books() {
+		$args = array(
+			'show_count' => 1,
+			'style'      => 'none',
+			'taxonomy'   => 'books-category',
+			'order'      => 'ASC',
+			'orderby'    => 'name',
+			'number'     => 5,
+		);
+		wp_list_categories( $args );
 	}
 }

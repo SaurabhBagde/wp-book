@@ -20,7 +20,7 @@
 <form method="post" action="options.php">
 	<?php settings_fields( 'books-setting-group' ); ?>
 	<?php do_settings_sections( 'book_settings' ); ?> 
-	<?php submit_button(); ?>
+	<?php submit_button( 'Save book options' ); ?>
 </form>
 
 
