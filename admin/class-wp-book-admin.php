@@ -511,7 +511,6 @@ class Wp_Book_Admin {
 	 * Book Shortcode
 	 *
 	 * @param [type] $atts shortcode passed attributes.
-	 * @return string
 	 */
 	public function book_shortcode_function( $atts ) {
 		$atts = shortcode_atts(
@@ -545,13 +544,35 @@ class Wp_Book_Admin {
 		$author = $this->get_book_meta( $atts['id'], 'book_author_name' );
 		$price = $this->get_book_meta( $atts['id'], 'book_price' );
 		?>
-			<p>Title: <?php echo $title ?></p>
-			<p>Author: <?php echo $author ?></p>
-			<p>Price: <?php echo $price ?></p>
+			<p>Title: <?php echo $title; ?></p>
+			<p>Author: <?php echo $author; ?></p>
+			<p>Price: <?php echo $price; ?></p>
 
 		<?php
 
-		return 'hello';
-
+	}
+	/**
+	 * Admin dashboard widget for top 5 books
+	 *
+	 * @return void
+	 */
+	public function admin_dashboard_widget() {
+		wp_add_dashboard_widget( 'admin-category-count', 'Top 5 Books', array( $this, 'widget_top_books' ) );
+	}
+	/**
+	 * Books widget top 5 display.
+	 *
+	 * @return void
+	 */
+	public function widget_top_books() {
+		$args = array(
+			'show_count' => 1,
+			'style'      => 'none',
+			'taxonomy'   => 'books-category',
+			'order'      => 'ASC',
+			'orderby'    => 'name',
+			'number'     => 5,
+		);
+		wp_list_categories( $args );
 	}
 }
