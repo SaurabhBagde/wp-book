@@ -405,6 +405,9 @@ class Wp_Book_Admin {
 	 * @param mixed  $prev_value Optional. Previous value to check before removing.
 	 * @return int|bool Meta ID if the key didn't exist, true on successful update, false on failure.
 	 */
+	public function update_book_meta( $book_id, $meta_key, $meta_value, $prev_value = '' ) {
+		return update_metadata( 'book', $book_id, $meta_key, $meta_value, $prev_value );
+	}
 
 	/**
 	 * Save book meta data into meta table.
@@ -425,35 +428,32 @@ class Wp_Book_Admin {
 		$author_name = '';
 		if ( ! empty( $_POST['author_name'] ) ) {
 			$author_name = sanitize_text_field( $_POST['author_name'] );
-			update_book_meta( $post_id, 'book_author_name', $author_name );
+			$this->update_book_meta( $post_id, 'book_author_name', $author_name );
 		}
 		$price = '';
 		if ( ! empty( $_POST['price'] ) ) {
 			$price = sanitize_text_field( $_POST['price'] );
-			update_book_meta( $post_id, 'book_price', $author_name );
+			$this->update_book_meta( $post_id, 'book_price', $price );
 		}
 		$publisher = '';
 		if ( ! empty( $_POST['publisher'] ) ) {
 			$publisher = sanitize_text_field( $_POST['publisher'] );
-			update_book_meta( $post_id, 'book_publisher', $publisher );
+			$this->update_book_meta( $post_id, 'book_publisher', $publisher );
 		}
 		$year = '';
 		if ( ! empty( $_POST['year'] ) ) {
 			$year = sanitize_text_field( $_POST['year'] );
-			update_book_meta( $post_id, 'book_year', $year );
+			$this->update_book_meta( $post_id, 'book_year', $year );
 		}
 		$edition = '';
 		if ( ! empty( $_POST['edition'] ) ) {
 			$edition = sanitize_text_field( $_POST['edition'] );
-			update_book_meta( $post_id, 'book_edition', $edition );
+			$this->update_book_meta( $post_id, 'book_edition', $edition );
 		}
 		$url = '';
 		if ( ! empty( $_POST['ur_l'] ) ) {
 			$url = sanitize_text_field( $_POST['ur_l'] );
-			update_book_meta( $post_id, 'book_url', $url );
+			$this->update_book_meta( $post_id, 'book_url', $url );
 		}
 	}
-}
-function update_book_meta( $book_id, $meta_key, $meta_value, $prev_value = '' ) {
-	return update_metadata( 'book', $book_id, $meta_key, $meta_value, $prev_value );
 }
