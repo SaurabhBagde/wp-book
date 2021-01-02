@@ -352,27 +352,27 @@ class Wp_Book_Admin {
 
 	<label for="author_name"><?php _e( 'Author Name' ); ?></label>
 	<br />
-	<input type="text" name="author_name" id="author_name"  size="30" />
+	<input type="text" name="author_name" id="author_name" value="<?php echo $this->get_book_meta( $post->ID, 'book_author_name' ); ?>" size="30" />
 	<br />
 	<label for="price"><?php _e( 'Price' ); ?></label>
 	<br />
-	<input  type="number" name="price" id="price"  size="30" />
+	<input  type="number" name="price" id="price" value="<?php echo $this->get_book_meta( $post->ID, 'book_price' ); ?>" size="30" />
 	<br />
 	<label for="publisher"><?php _e( 'Publisher' ); ?></label>
 	<br />
-	<input  type="text" name="publisher" id="publisher"  size="30" />
+	<input  type="text" name="publisher" id="publisher" value=" <?php echo $this->get_book_meta( $post->ID, 'book_publisher' ); ?>" size="30" />
 	<br />
 	<label for="year"><?php _e( 'Year' ); ?></label>
 	<br />
-	<input  type="text" name="year" id="year"  size="30" />
+	<input  type="text" name="year" id="year" value="<?php echo $this->get_book_meta( $post->ID, 'book_year' ); ?>" size="30" />
 	<br />
 	<label for="edition"><?php _e( 'Edition' ); ?></label>
 	<br />
-	<input  type="text" name="edition" id="edition" size="30" />
+	<input  type="text" name="edition" id="edition" value="<?php echo $this->get_book_meta( $post->ID, 'book_year' ); ?>" size="30" />
 	<br />
 	<label for="ur_l"><?php _e( 'URL' ); ?></label>
 	<br />
-	<input  type="text" name="ur_l" id="ur_l" size="30" />
+	<input  type="text" name="ur_l" id="ur_l" value="<?php echo $this->get_book_meta( $post->ID, 'book_url' ); ?>" size="30" />
 		<?php
 	}
 
@@ -416,7 +416,7 @@ class Wp_Book_Admin {
 	 * @return bool True on success, false on failure.
 	 */
 	public function delete_book_meta( $book_id, $meta_key, $meta_value = '' ) {
-		return delete_metadata( 'books', $book_id, $meta_key, $meta_value );
+		return delete_metadata( 'book', $book_id, $meta_key, $meta_value );
 	}
 
 	/**
@@ -432,10 +432,10 @@ class Wp_Book_Admin {
 	}
 
 	/**
-	 * Update badge meta field based on badge ID.
+	 * Update book meta field based on badge ID.
 	 *
 	 * Use the $prev_value parameter to differentiate between meta fields with the
-	 * same key and badge ID.
+	 * same key and book ID.
 	 *
 	 * If the meta field for the user does not exist, it will be added.
 	 *
@@ -505,17 +505,18 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function register_shortcodes() {
-		add_shortcode( 'book', array( $this, 'book_shortcode_function' ) );
+		add_shortcode( 'book', array( $this, 'book_shortcode' ) );
 	}
 	/**
-	 * Book Shortcode
+	 * Shortcode for book plugin
 	 *
-	 * @param [type] $atts shortcode passed attributes.
+	 * @param [type] $atts shortcode attributes.
+	 * @return function
 	 */
-	public function book_shortcode_function( $atts ) {
+	public function book_shortcode( $atts ) {
 		$atts = shortcode_atts(
 			array(
-				'id'          => '',
+				'book_id'     => '',
 				'author_name' => '',
 				'year'        => '',
 				'category'    => '',
@@ -524,33 +525,118 @@ class Wp_Book_Admin {
 			),
 			$atts
 		);
-		$the_query = new WP_Query(
-			array(
-				'post_type' => 'books',
-				'p'         => $atts['id'],
-			)
+
+		$args = array(
+			'post_type'   => 'books',
+			'post_status' => 'publish',
+			'author'      => $atts['author_name'],
 		);
 
-		if ( $the_query->have_posts() ) {
-			?>
-				<p><?php $title = esc_html( get_the_title() ); ?></p>
-				<?php
-				wp_reset_postdata();
-
-		} else {
-			// no post.
-			echo 'No title';
+		if ( '' !== $atts['book_id'] ) {
+			$args['book_id'] = $atts['book_id'];
 		}
-		$author = $this->get_book_meta( $atts['id'], 'book_author_name' );
-		$price = $this->get_book_meta( $atts['id'], 'book_price' );
-		?>
-			<p>Title: <?php echo $title; ?></p>
-			<p>Author: <?php echo $author; ?></p>
-			<p>Price: <?php echo $price; ?></p>
-
-		<?php
-
+		if ( '' !== $atts['category'] ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'books_category',
+					'terms'    => array( $atts['category'] ),
+					'field'    => 'name',
+					'operator' => 'IN',
+				),
+			);
+		}
+		if ( '' !== $atts['tag'] ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'books_tag',
+					'terms'    => array( $atts['tag'] ),
+					'field'    => 'name',
+					'operator' => 'IN',
+				),
+			);
+		}
+		return $this->book_shortcode_function( $args );
 	}
+
+
+
+	/**
+	 * Function for rendering the data
+	 *
+	 * @param [type] $args arguments passed by shortcode.
+	 * @return void
+	 */
+	public function book_shortcode_function( $args ) {
+
+		$currency = get_option( 'currency' );
+
+		$wpb_query = new WP_Query( $args );
+		if ( $wpb_query->have_posts() ) {
+			while ( $wpb_query->have_posts() ) {
+				$wpb_query->the_post();
+
+				// Retriving the meta info of book from database.
+				$info_author_name = $this->get_book_meta( get_the_id(), 'book_author_name' );
+				$info_price       = $this->get_book_meta( get_the_id(), 'book_price' );
+				$info_publisher   = $this->get_book_meta( get_the_id(), 'book_publisher' );
+				$info_year        = $this->get_book_meta( get_the_id(), 'book_year' );
+				$info_edition     = $this->get_book_meta( get_the_id(), 'book_edition' );
+				$info_url         = $this->get_book_meta( get_the_id(), 'book_url' );
+
+				?>
+				<ul>
+				<?php
+				if ( get_the_title() !== '' ) {
+					?>
+						<li>Title: <a href="<?php get_post_permalink(); ?>"><?php echo get_the_title(); ?></a></li>
+					<?php
+				}
+				if ( '' !== $info_author_name ) {
+					?>
+						<li>Author: <?php echo $info_author_name; ?></li>
+					<?php
+				}
+				if ( '' !== $info_price ) {
+					?>
+						<li>Price: <?php echo $info_price . ' ' . $currency; ?></li>
+					<?php
+				}
+				if ( '' !== $info_publisher ) {
+					?>
+						<li>Publisher: <?php echo $info_publisher; ?></li>
+					<?php
+				}
+				if ( '' !== $info_year ) {
+					?>
+						<li>Year: <?php echo $info_year; ?></li>
+					<?php
+				}
+				if ( '' !== $info_edition ) {
+					?>
+						<li>Edition: <?php echo $info_edition; ?></li>
+					<?php
+				}
+				if ( '' !== $info_url ) {
+					?>
+						<li>Url: <?php echo $info_url; ?></li>
+					<?php
+				}
+				if ( get_the_content() !== '' ) {
+					?>
+						<li>Content: <?php echo get_the_content(); ?></li>
+					<?php
+				}
+				?>
+				</ul>
+				<?php
+			}
+		} else {
+			?>
+			<h1>Sorry no Books Found</h1>
+			<?php
+		}
+	}
+
 	/**
 	 * Admin dashboard widget for top 5 books
 	 *
@@ -559,6 +645,7 @@ class Wp_Book_Admin {
 	public function admin_dashboard_widget() {
 		wp_add_dashboard_widget( 'admin-category-count', 'Top 5 Books', array( $this, 'widget_top_books' ) );
 	}
+
 	/**
 	 * Books widget top 5 display.
 	 *
