@@ -29,7 +29,7 @@ class Category_Widget extends WP_Widget {
 	/**
 	 * Widget form
 	 *
-	 * @param [type] $instance
+	 * @param [type] $instance instance of widget.
 	 * @return void
 	 */
 	public function form( $instance ) {
