@@ -368,7 +368,7 @@ class Wp_Book_Admin {
 	<br />
 	<label for="edition"><?php _e( 'Edition' ); ?></label>
 	<br />
-	<input  type="text" name="edition" id="edition" value="<?php echo $this->get_book_meta( $post->ID, 'book_year' ); ?>" size="30" />
+	<input  type="text" name="edition" id="edition" value="<?php echo $this->get_book_meta( $post->ID, 'book_edition' ); ?>" size="30" />
 	<br />
 	<label for="ur_l"><?php _e( 'URL' ); ?></label>
 	<br />
@@ -400,7 +400,7 @@ class Wp_Book_Admin {
 	 * @return int|false Meta ID on success, false on failure.
 	 */
 	public function add_book_meta( $book_id, $meta_key, $meta_value, $unique = false ) {
-		return add_metadata( 'books', $book_id, $meta_key, $meta_value, $unique );
+		return add_metadata( 'book', $book_id, $meta_key, $meta_value, $unique );
 	}
 
 	/**
@@ -533,12 +533,26 @@ class Wp_Book_Admin {
 		);
 
 		if ( '' !== $atts['book_id'] ) {
-			$args['book_id'] = $atts['book_id'];
+			$args['p'] = $atts['book_id'];
 		}
+		// if ( '' !== $atts['year'] ) {
+		// $args['meta_query'] = array(
+		// 'meta_key'   => 'book_year',
+		// 'meta_value' => $atts['year'],
+
+		// );
+		// }
+		// if ( '' !== $atts['publisher'] ) {
+		// $args['meta_query'] = array(
+		// 'meta_key'   => 'book_publisher',
+		// 'meta_value' => $atts['publisher'],
+
+		// );
+		// }
 		if ( '' !== $atts['category'] ) {
 			$args['tax_query'] = array(
 				array(
-					'taxonomy' => 'books_category',
+					'taxonomy' => 'books-category',
 					'terms'    => array( $atts['category'] ),
 					'field'    => 'name',
 					'operator' => 'IN',
@@ -548,7 +562,7 @@ class Wp_Book_Admin {
 		if ( '' !== $atts['tag'] ) {
 			$args['tax_query'] = array(
 				array(
-					'taxonomy' => 'books_tag',
+					'taxonomy' => 'books-tag',
 					'terms'    => array( $atts['tag'] ),
 					'field'    => 'name',
 					'operator' => 'IN',
@@ -630,11 +644,28 @@ class Wp_Book_Admin {
 				</ul>
 				<?php
 			}
+			wp_reset_postdata();
 		} else {
 			?>
 			<h1>Sorry no Books Found</h1>
 			<?php
 		}
+	}
+
+	// Widget.
+	/**
+	 * Initialising widget
+	 *
+	 * @return void
+	 */
+	public function init_wid() {
+		// add_action(
+		// 'widgets_init',
+		// function() {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-book-widget.php';
+				register_widget( 'Category_Widget' );
+		// }
+		// );
 	}
 
 	/**
