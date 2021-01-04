@@ -112,7 +112,7 @@ class Category_Widget extends WP_Widget {
 		<?php echo $before_widget; ?>
 		<?php
 		if ( $title ) {
-			echo $before_title . __( $title, 'wp-book' ) . $after_title; }
+			echo $before_title . __( echo $title, 'wp-book' ) . $after_title; }
 		?>
 		<ul>
 		<?php
