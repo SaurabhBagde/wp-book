@@ -3,212 +3,211 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-04 11:17+0530\n"
-"PO-Revision-Date: 2021-01-04 11:17+0500\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-01-04 11:40+0530\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Eazy Po 0.9.5.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: \n"
+"Language: it\n"
 
 #: admin/class-category-widget.php:23
 msgid "Custom widget to display selected category books"
-msgstr ""
+msgstr "Widget personalizzato per visualizzare i libri di categorie selezionati"
 
 #: admin/class-category-widget.php:25 admin/class-wp-book-admin.php:248
 msgid "Book Category"
-msgstr ""
+msgstr "Categoria Libro"
 
 #: admin/class-category-widget.php:55
 msgid "Title:"
-msgstr ""
+msgstr "Titolo:"
 
 #: admin/class-category-widget.php:59
 msgid "Number of categories to display"
-msgstr ""
+msgstr "Numero di categorie da visualizzare"
 
 #: admin/class-category-widget.php:63
 msgid "Choose the Taxonomy to display"
-msgstr ""
+msgstr "Scegliere la tassonomia da visualizzare"
 
 #: admin/class-category-widget.php:122
 #, php-format
 msgid "View all posts in %s"
-msgstr ""
+msgstr "Vedi tutti gli articoli in %s"
 
 #: admin/class-wp-book-admin.php:180
 msgctxt "Post Type General Name"
 msgid "Books"
-msgstr ""
+msgstr "Libri"
 
 #: admin/class-wp-book-admin.php:181
 msgctxt "Post Type Singular Name"
 msgid "Book"
-msgstr ""
+msgstr "Libro"
 
 #: admin/class-wp-book-admin.php:182
 msgid "Books"
-msgstr ""
+msgstr "Libri"
 
 #: admin/class-wp-book-admin.php:183 admin/class-wp-book-admin.php:241
 msgid "Parent Book"
-msgstr ""
+msgstr "Libro Principale"
 
 #: admin/class-wp-book-admin.php:184 admin/class-wp-book-admin.php:240
 msgid "All Books"
-msgstr ""
+msgstr "Tutti i libri"
 
 #: admin/class-wp-book-admin.php:185 admin/class-wp-book-admin.php:244
 msgid "View Book"
-msgstr ""
+msgstr "Visualizza libro"
 
 #: admin/class-wp-book-admin.php:186 admin/class-wp-book-admin.php:187
 msgid "Add New Book"
-msgstr ""
+msgstr "Aggiungi nuovo libro"
 
 #: admin/class-wp-book-admin.php:188 admin/class-wp-book-admin.php:243
 msgid "Edit Book"
-msgstr ""
+msgstr "Modifica libro"
 
 #: admin/class-wp-book-admin.php:189
 msgid "Update Book"
-msgstr ""
+msgstr "Aggiorna libro"
 
 #: admin/class-wp-book-admin.php:190
 msgid "Search Book"
-msgstr ""
+msgstr "Cerca nel libro"
 
 #: admin/class-wp-book-admin.php:191
 msgid "Not Found"
-msgstr ""
+msgstr "Non trovato"
 
 #: admin/class-wp-book-admin.php:192
 msgid "Not found in Trash"
-msgstr ""
+msgstr "Non trovato nel Cestino"
 
 #: admin/class-wp-book-admin.php:198
 msgid "books"
-msgstr ""
+msgstr "libri"
 
 #: admin/class-wp-book-admin.php:199
 msgid "Books Collection"
-msgstr ""
+msgstr "Raccolta di libri"
 
 #: admin/class-wp-book-admin.php:237
 msgctxt "Taxonomy Genaral Name"
 msgid "Books Category"
-msgstr ""
+msgstr "Categoria libri"
 
 #: admin/class-wp-book-admin.php:238
 msgctxt "Taxonomy Singular Name"
 msgid "Book Category"
-msgstr ""
+msgstr "Categoria del libro"
 
 #: admin/class-wp-book-admin.php:239
 msgid "Search Books"
-msgstr ""
+msgstr "Cerca libri"
 
 #: admin/class-wp-book-admin.php:242
 msgid "Parent Book:"
-msgstr ""
+msgstr "Libro genitori:"
 
 #: admin/class-wp-book-admin.php:245
 msgid "Update Book category"
-msgstr ""
+msgstr "Aggiorna la categoria del libro"
 
 #: admin/class-wp-book-admin.php:246
 msgid "Add New Book category"
-msgstr ""
+msgstr "Aggiungi categoria Nuovo libro"
 
 #: admin/class-wp-book-admin.php:247
 msgid "New Book category"
-msgstr ""
+msgstr "Nuova categoria di libri"
 
 #: admin/class-wp-book-admin.php:249
 msgid "No Book Category Found"
-msgstr ""
+msgstr "Nessuna categoria di libri trovata"
 
 #: admin/class-wp-book-admin.php:281 admin/class-wp-book-admin.php:282
 msgctxt "Taxonomy Genaral Name"
 msgid "Books Tag"
-msgstr ""
+msgstr "Tag di libri"
 
 #: admin/class-wp-book-admin.php:283
 msgid "Search Books Tag"
-msgstr ""
+msgstr "Cerca tag di libri"
 
 #: admin/class-wp-book-admin.php:284
 msgid "Popular Books Tag"
-msgstr ""
+msgstr "Tag di libri popolari"
 
 #: admin/class-wp-book-admin.php:285
 msgid "All Books Tag"
-msgstr ""
+msgstr "Tag di tutti i libri"
 
 #: admin/class-wp-book-admin.php:288
 msgid "Edit Books Tag"
-msgstr ""
+msgstr "Modifica tag libri"
 
 #: admin/class-wp-book-admin.php:289
 msgid "Update Books Tag"
-msgstr ""
+msgstr "Aggiorna tag libri"
 
 #: admin/class-wp-book-admin.php:290
 msgid "Add New Books Tag"
-msgstr ""
+msgstr "Aggiungi tag nuovi libri"
 
 #: admin/class-wp-book-admin.php:291
 msgid "New Books Tag Name"
-msgstr ""
+msgstr "Nome tag nuovi libri"
 
 #: admin/class-wp-book-admin.php:292
 msgid "Separate books tag with commas"
-msgstr ""
+msgstr "Etichetta di libri separata con virgole"
 
 #: admin/class-wp-book-admin.php:293
 msgid "Add or remove Books Tag"
-msgstr ""
+msgstr "Aggiungi o rimuovi tag di libri"
 
 #: admin/class-wp-book-admin.php:294
 msgid "Choose from the most used Books Tag"
-msgstr ""
+msgstr "Scegli tra i tag di libri più utilizzati"
 
 #: admin/class-wp-book-admin.php:295
 msgid "Books Tag"
-msgstr ""
+msgstr "Tag di libri"
 
 #: admin/class-wp-book-admin.php:336
 msgid "Book Meta"
-msgstr ""
+msgstr "Prenota Meta"
 
 #: admin/class-wp-book-admin.php:353
 msgid "Author Name"
-msgstr ""
+msgstr "Nome dell'autore"
 
 #: admin/class-wp-book-admin.php:357
 msgid "Price"
-msgstr ""
+msgstr "Prezzo"
 
 #: admin/class-wp-book-admin.php:361
 msgid "Publisher"
-msgstr ""
+msgstr "Editore"
 
 #: admin/class-wp-book-admin.php:365
 msgid "Year"
-msgstr ""
+msgstr "Anno"
 
 #: admin/class-wp-book-admin.php:369
 msgid "Edition"
-msgstr ""
+msgstr "Edizione"
 
 #: admin/class-wp-book-admin.php:373
 msgid "URL"
-msgstr ""
+msgstr "collegamento"

@@ -177,26 +177,26 @@ class Wp_Book_Admin {
 
 		// Set UI labels for Custom Post Type.
 		$labels = array(
-			'name'               => _x( 'Books', 'Post Type General Name', 'twentytwenty' ),
-			'singular_name'      => _x( 'Book', 'Post Type Singular Name', 'twentytwenty' ),
-			'menu_name'          => __( 'Books', 'twentytwenty' ),
-			'parent_item_colon'  => __( 'Parent Book', 'twentytwenty' ),
-			'all_items'          => __( 'All Books', 'twentytwenty' ),
-			'view_item'          => __( 'View Book', 'twentytwenty' ),
-			'add_new_item'       => __( 'Add New Book', 'twentytwenty' ),
-			'add_new'            => __( 'Add New Book', 'twentytwenty' ),
-			'edit_item'          => __( 'Edit Book', 'twentytwenty' ),
-			'update_item'        => __( 'Update Book', 'twentytwenty' ),
-			'search_items'       => __( 'Search Book', 'twentytwenty' ),
-			'not_found'          => __( 'Not Found', 'twentytwenty' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'twentytwenty' ),
+			'name'               => _x( 'Books', 'Post Type General Name', 'wp-book' ),
+			'singular_name'      => _x( 'Book', 'Post Type Singular Name', 'wp-book' ),
+			'menu_name'          => __( 'Books', 'wp-book' ),
+			'parent_item_colon'  => __( 'Parent Book', 'wp-book' ),
+			'all_items'          => __( 'All Books', 'wp-book' ),
+			'view_item'          => __( 'View Book', 'wp-book' ),
+			'add_new_item'       => __( 'Add New Book', 'wp-book' ),
+			'add_new'            => __( 'Add New Book', 'wp-book' ),
+			'edit_item'          => __( 'Edit Book', 'wp-book' ),
+			'update_item'        => __( 'Update Book', 'wp-book' ),
+			'search_items'       => __( 'Search Book', 'wp-book' ),
+			'not_found'          => __( 'Not Found', 'wp-book' ),
+			'not_found_in_trash' => __( 'Not found in Trash', 'wp-book' ),
 		);
 
 		// Set other options for Custom Post Type.
 
 		$args = array(
-			'label'               => __( 'books', 'twentytwenty' ),
-			'description'         => __( 'Books Collection', 'twentytwenty' ),
+			'label'               => __( 'books', 'wp-book' ),
+			'description'         => __( 'Books Collection', 'wp-book' ),
 			'labels'              => $labels,
 			// Features this CPT supports in Post Editor.
 			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields' ),
@@ -234,19 +234,19 @@ class Wp_Book_Admin {
 		// first do the translations part for GUI.
 
 		$labels = array(
-			'name'              => _x( 'Books Category', 'taxonomy general name' ),
-			'singular_name'     => _x( 'Book Category', 'taxonomy singular name' ),
-			'search_items'      => __( 'Search Books' ),
-			'all_items'         => __( 'All Books' ),
-			'parent_item'       => __( 'Parent Book' ),
-			'parent_item_colon' => __( 'Parent Book:' ),
-			'edit_item'         => __( 'Edit Book' ),
-			'view_item'         => __( 'View Book' ),
-			'update_item'       => __( 'Update Book category' ),
-			'add_new_item'      => __( 'Add New Book category' ),
-			'new_item_name'     => __( 'New Book category' ),
-			'menu_name'         => __( 'Book Category' ),
-			'not_found'         => __( 'No Book Category Found' ),
+			'name'              => _x( 'Books Category', 'Taxonomy Genaral Name', 'wp-book' ),
+			'singular_name'     => _x( 'Book Category', 'Taxonomy Singular Name', 'wp-book' ),
+			'search_items'      => __( 'Search Books', 'wp-book' ),
+			'all_items'         => __( 'All Books', 'wp-book' ),
+			'parent_item'       => __( 'Parent Book', 'wp-book' ),
+			'parent_item_colon' => __( 'Parent Book:', 'wp-book' ),
+			'edit_item'         => __( 'Edit Book', 'wp-book' ),
+			'view_item'         => __( 'View Book', 'wp-book' ),
+			'update_item'       => __( 'Update Book category', 'wp-book' ),
+			'add_new_item'      => __( 'Add New Book category', 'wp-book' ),
+			'new_item_name'     => __( 'New Book category', 'wp-book' ),
+			'menu_name'         => __( 'Book Category', 'wp-book' ),
+			'not_found'         => __( 'No Book Category Found', 'wp-book' ),
 		);
 
 		// Now register the taxonomy.
@@ -278,21 +278,21 @@ class Wp_Book_Admin {
 		// Labels part for the GUI.
 
 		$labels = array(
-			'name'                       => _x( 'Books Tag', 'taxonomy general name' ),
-			'singular_name'              => _x( 'Books Tag', 'taxonomy singular name' ),
-			'search_items'               => __( 'Search Books Tag' ),
-			'popular_items'              => __( 'Popular Books Tag' ),
-			'all_items'                  => __( 'All Books Tag' ),
+			'name'                       => _x( 'Books Tag', 'Taxonomy Genaral Name', 'wp-book' ),
+			'singular_name'              => _x( 'Books Tag', 'Taxonomy Genaral Name', 'wp-book' ),
+			'search_items'               => __( 'Search Books Tag', 'wp-book' ),
+			'popular_items'              => __( 'Popular Books Tag', 'wp-book' ),
+			'all_items'                  => __( 'All Books Tag', 'wp-book' ),
 			'parent_item'                => null,
 			'parent_item_colon'          => null,
-			'edit_item'                  => __( 'Edit Books Tag' ),
-			'update_item'                => __( 'Update Books Tag' ),
-			'add_new_item'               => __( 'Add New Books Tag' ),
-			'new_item_name'              => __( 'New Books Tag Name' ),
-			'separate_items_with_commas' => __( 'Separate books tag with commas' ),
-			'add_or_remove_items'        => __( 'Add or remove Books Tag' ),
-			'choose_from_most_used'      => __( 'Choose from the most used Books Tag' ),
-			'menu_name'                  => __( 'Books Tag' ),
+			'edit_item'                  => __( 'Edit Books Tag', 'wp-book' ),
+			'update_item'                => __( 'Update Books Tag', 'wp-book' ),
+			'add_new_item'               => __( 'Add New Books Tag', 'wp-book' ),
+			'new_item_name'              => __( 'New Books Tag Name', 'wp-book' ),
+			'separate_items_with_commas' => __( 'Separate books tag with commas', 'wp-book' ),
+			'add_or_remove_items'        => __( 'Add or remove Books Tag', 'wp-book' ),
+			'choose_from_most_used'      => __( 'Choose from the most used Books Tag', 'wp-book' ),
+			'menu_name'                  => __( 'Books Tag', 'wp-book' ),
 		);
 
 		// Now register the non-hierarchical taxonomy like tag.
@@ -333,7 +333,7 @@ class Wp_Book_Admin {
 		// Create one or more meta boxes to be displayed on the post editor screen.
 		add_meta_box(
 			'book-meta-box',                             // Unique ID.
-			esc_html__( 'Book Meta', 'example' ),       // Title.
+			esc_html__( 'Book Meta', 'wp-book' ),       // Title.
 			array( $this, 'book_meta_box_display' ),   // Callback function.
 			'books',                                  // Admin page (or post type).
 			'side',                                  // Context.
@@ -350,27 +350,27 @@ class Wp_Book_Admin {
 
 		<?php wp_nonce_field( basename( __FILE__ ), 'wp_wpb_cpt_nonce' ); ?>
 
-	<label for="author_name"><?php _e( 'Author Name' ); ?></label>
+	<label for="author_name"><?php _e( 'Author Name', 'wp-book' ); ?></label>
 	<br />
 	<input type="text" name="author_name" id="author_name" value="<?php echo $this->get_book_meta( $post->ID, 'book_author_name' ); ?>" size="30" />
 	<br />
-	<label for="price"><?php _e( 'Price' ); ?></label>
+	<label for="price"><?php _e( 'Price', 'wp-book' ); ?></label>
 	<br />
 	<input  type="number" name="price" id="price" value="<?php echo $this->get_book_meta( $post->ID, 'book_price' ); ?>" size="30" />
 	<br />
-	<label for="publisher"><?php _e( 'Publisher' ); ?></label>
+	<label for="publisher"><?php _e( 'Publisher', 'wp-book' ); ?></label>
 	<br />
 	<input  type="text" name="publisher" id="publisher" value=" <?php echo $this->get_book_meta( $post->ID, 'book_publisher' ); ?>" size="30" />
 	<br />
-	<label for="year"><?php _e( 'Year' ); ?></label>
+	<label for="year"><?php _e( 'Year', 'wp-book' ); ?></label>
 	<br />
 	<input  type="text" name="year" id="year" value="<?php echo $this->get_book_meta( $post->ID, 'book_year' ); ?>" size="30" />
 	<br />
-	<label for="edition"><?php _e( 'Edition' ); ?></label>
+	<label for="edition"><?php _e( 'Edition', 'wp-book' ); ?></label>
 	<br />
 	<input  type="text" name="edition" id="edition" value="<?php echo $this->get_book_meta( $post->ID, 'book_edition' ); ?>" size="30" />
 	<br />
-	<label for="ur_l"><?php _e( 'URL' ); ?></label>
+	<label for="ur_l"><?php _e( 'URL', 'wp-book' ); ?></label>
 	<br />
 	<input  type="text" name="ur_l" id="ur_l" value="<?php echo $this->get_book_meta( $post->ID, 'book_url' ); ?>" size="30" />
 		<?php
@@ -535,20 +535,7 @@ class Wp_Book_Admin {
 		if ( '' !== $atts['book_id'] ) {
 			$args['p'] = $atts['book_id'];
 		}
-		// if ( '' !== $atts['year'] ) {
-		// $args['meta_query'] = array(
-		// 'meta_key'   => 'book_year',
-		// 'meta_value' => $atts['year'],
 
-		// );
-		// }
-		// if ( '' !== $atts['publisher'] ) {
-		// $args['meta_query'] = array(
-		// 'meta_key'   => 'book_publisher',
-		// 'meta_value' => $atts['publisher'],
-
-		// );
-		// }
 		if ( '' !== $atts['category'] ) {
 			$args['tax_query'] = array(
 				array(
@@ -659,13 +646,9 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function init_wid() {
-		// add_action(
-		// 'widgets_init',
-		// function() {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-book-widget.php';
+
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-category-widget.php';
 				register_widget( 'Category_Widget' );
-		// }
-		// );
 	}
 
 	/**
