@@ -105,8 +105,7 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function my_admin_menu() {
-		add_menu_page( 'book_settings', 'Books Menu', 'manage_options', 'book_settings', array( $this, 'book_admin_page' ), 'dashicons-tickets', 250 );
-		add_submenu_page( 'booksettings', 'books settings', 'Book Setting', 'manage_options', 'book-submenu', array( $this, 'submenu' ) );
+		add_menu_page( 'book_settings', __( 'Books Menu', 'wp-book' ), 'manage_options', 'book_settings', array( $this, 'book_admin_page' ), 'dashicons-tickets', 250 );
 
 	}
 	/**
@@ -138,7 +137,7 @@ class Wp_Book_Admin {
 	 * @return void
 	 */
 	public function book_config_section() {
-		echo 'Configure Book Options';
+		echo __( 'Configure Book Options', 'wp-book' );
 	}
 	/**
 	 * Book price post per page.
@@ -158,15 +157,7 @@ class Wp_Book_Admin {
 		$post_per_page = get_option( 'post_per_page' );
 		echo '<input type="text" name="post_per_page" value="' . esc_attr( $post_per_page ) . ' " placeholder = "10"/>';
 	}
-	/**
-	 * Submenu Page
-	 *
-	 * @return void
-	 */
-	public function submenu() {
-		// Return Submenu view.
-		require_once 'partials/submenu-page.php';
-	}
+
 
 	/**
 	 * Custom Post Type Book
@@ -216,6 +207,7 @@ class Wp_Book_Admin {
 			'publicly_queryable'  => true,
 			'capability_type'     => 'post',
 			'show_in_rest'        => true,
+			'menu_icon'           => 'dashicons-tickets',
 
 		);
 

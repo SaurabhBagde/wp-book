@@ -60,7 +60,13 @@ class Category_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Choose the Taxonomy to display', 'wp-book' ); ?></label> <br/>
 			<select name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" />
 				<?php
-				$taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ), 'names' );
+				$taxonomies = get_taxonomies(
+					array(
+						'public'   => true,
+						'_builtin' => false,
+					),
+					'names'
+				);
 				foreach ( $taxonomies as $option ) {
 					echo '<option id="' . $option . '"', $taxonomy == $option ? ' selected="selected"' : '', '>', $option, '</option>';
 				}
@@ -112,7 +118,7 @@ class Category_Widget extends WP_Widget {
 		<?php echo $before_widget; ?>
 		<?php
 		if ( $title ) {
-			echo $before_title . $title, 'wp-book'. $after_title; }
+			echo $before_title . $title, 'wp-book' . $after_title; }
 		?>
 		<ul>
 		<?php
