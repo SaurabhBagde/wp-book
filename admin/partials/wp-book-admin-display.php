@@ -15,7 +15,7 @@
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-<h1>Book Setting</h1>
+<h1><?php __( 'Book Setting', 'wp-book' ); ?></h1>
 <?php settings_errors(); ?>
 <form method="post" action="options.php">
 	<?php settings_fields( 'books-setting-group' ); ?>
