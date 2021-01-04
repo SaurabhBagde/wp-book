@@ -35,7 +35,6 @@ class Category_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$title    = '';
 		$number   = '';
-		$exclude  = '';
 		$taxonomy = '';
 		if ( ! empty( $instance['title'] ) ) {
 			$title = esc_attr( $instance['title'] );
@@ -43,9 +42,7 @@ class Category_Widget extends WP_Widget {
 		if ( ! empty( $instance['number'] ) ) {
 			$number = esc_attr( $instance['number'] );
 		}
-		if ( ! empty( $instance['exclude'] ) ) {
-			$exclude = esc_attr( $instance['exclude'] );
-		}
+
 		if ( ! empty( $instance['taxonomy'] ) ) {
 			$taxonomy = esc_attr( $instance['taxonomy'] );
 		}
@@ -60,10 +57,10 @@ class Category_Widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" />
 		</p>
 		<p>	
-			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Choose the Taxonomy to display', 'wp-book' ); ?></label> 
-			<select name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>"/>
+			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Choose the Taxonomy to display', 'wp-book' ); ?></label> <br/>
+			<select name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" />
 				<?php
-				$taxonomies = get_taxonomies( array( 'name' => 'books-category' ), 'names' );
+				$taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ), 'names' );
 				foreach ( $taxonomies as $option ) {
 					echo '<option id="' . $option . '"', $taxonomy == $option ? ' selected="selected"' : '', '>', $option, '</option>';
 				}
@@ -118,7 +115,10 @@ class Category_Widget extends WP_Widget {
 			echo $before_title . __( $title, 'wp-book' ) . $after_title; }
 		?>
 		<ul>
-		<?php foreach ( $cats as $cat ) { ?>
+		<?php
+		foreach ( $cats as $cat ) {
+			// Taxonomy terms as links.
+			?>
 		<li><a href="<?php echo get_term_link( $cat->slug, $taxonomy ); ?>" title="<?php sprintf( __( 'View all posts in %s', 'wp-book' ), $cat->name ); ?>"><?php echo $cat->name; ?></a></li>
 		<?php } ?>
 		</ul>
