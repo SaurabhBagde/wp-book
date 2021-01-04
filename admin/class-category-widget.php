@@ -75,7 +75,7 @@ class Category_Widget extends WP_Widget {
 	 * WP_Widget::update
 	 *
 	 * @param [type] $new_instance new instance.
-	 * @param [type] $old_instance old
+	 * @param [type] $old_instance old.
 	 * @return instance
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -112,7 +112,7 @@ class Category_Widget extends WP_Widget {
 		<?php echo $before_widget; ?>
 		<?php
 		if ( $title ) {
-			echo $before_title . __( $title, 'wp-book' ) . $after_title; }
+			echo $before_title . $title, 'wp-book'. $after_title; }
 		?>
 		<ul>
 		<?php
