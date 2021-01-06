@@ -39,9 +39,6 @@ class Category_Widget extends WP_Widget {
 		if ( ! empty( $instance['title'] ) ) {
 			$title = esc_attr( $instance['title'] );
 		}
-		if ( ! empty( $instance['number'] ) ) {
-			$number = esc_attr( $instance['number'] );
-		}
 
 		if ( ! empty( $instance['taxonomy'] ) ) {
 			$taxonomy = esc_attr( $instance['taxonomy'] );
@@ -49,26 +46,23 @@ class Category_Widget extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wp-book' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of categories to display', 'wp-book' ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" />
+			<label  for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'wp-book' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
 		</p>
 		<p>	
 			<label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Choose the Taxonomy to display', 'wp-book' ); ?></label> <br/>
-			<select name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" />
+			<select class="widefat" name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" />
 				<?php
-				$taxonomies = get_taxonomies(
+				$taxonomies = get_terms(
 					array(
-						'public'   => true,
-						'_builtin' => false,
-					),
-					'names'
+						'taxonomy'   => 'books-category',
+						'hide_empty' => false,
+					)
 				);
 				foreach ( $taxonomies as $option ) {
-					echo '<option id="' . $option . '"', $taxonomy == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+					if ( $option->taxonomy == 'books-category' ) {
+						echo '<option  id="' . $option->name . '" value="'.$option->name.'"', $taxonomy == $option->name ? ' selected="selected"' : '', '>', $option->name, '</option>';
+					}
 				}
 				?>
 			</select>		
@@ -87,7 +81,6 @@ class Category_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance             = $old_instance;
 		$instance['title']    = wp_strip_all_tags( $new_instance['title'] );
-		$instance['number']   = wp_strip_all_tags( $new_instance['number'] );
 		$instance['taxonomy'] = $new_instance['taxonomy'];
 		return $instance;
 	}
@@ -103,30 +96,36 @@ class Category_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		extract( $args );
-		$title    = apply_filters( 'widget_title', $instance['title'] ); // the widget title.
-		$number   = $instance['number'];                                // the number of categories to show.
+		$title    = apply_filters( 'widget_title', $instance['title'] ); // the widget title.                               // the number of categories to show.
 		$taxonomy = $instance['taxonomy'];                             // the taxonomy to display.
 
 		$args = array(
-			'number'   => $number,
-			'taxonomy' => $taxonomy,
+			'post_type' => 'books',
+			'tax_query' => array (
+				array(
+					'taxonomy' => 'books-category',
+					'field'    => 'slug',
+					'terms'    => $taxonomy
+				)
+			)
 		);
 
 		// Retrieves an array of categories or taxonomy terms.
-		$cats = get_categories( $args );
+
 		?>
 		<?php echo $before_widget; ?>
 		<?php
 		if ( $title ) {
-			echo $before_title . $title, 'wp-book' . $after_title; }
+			echo $before_title . $title . $after_title; }
 		?>
 		<ul>
 		<?php
-		foreach ( $cats as $cat ) {
-			// Taxonomy terms as links.
-			?>
-		<li><a href="<?php echo get_term_link( $cat->slug, $taxonomy ); ?>" title="<?php sprintf( __( 'View all posts in %s', 'wp-book' ), $cat->name ); ?>"><?php echo $cat->name; ?></a></li>
-		<?php } ?>
+			$the_query = new WP_Query($args);
+			while($the_query->have_posts()){
+				$the_query->the_post();
+				echo '<li><a href="'.get_permalink( get_the_id() ).'">'.get_the_title().'</a></li>';
+			}
+		?>
 		</ul>
 		<?php echo $after_widget; ?>
 		<?php
